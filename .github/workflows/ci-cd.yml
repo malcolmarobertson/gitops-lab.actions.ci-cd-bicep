@@ -94,7 +94,7 @@ jobs:
       environment: production
       needs: [ Dev-Job ]
       env: 
-        AZURE-WEBAPP-NAME: <<REPLACE>>-mywebapp-prod
+        AZURE-WEBAPP-NAME: malcolmu@uprod-mywebapp-prod
       steps:
         - name: Download Templates
           uses: actions/download-artifact@v3
