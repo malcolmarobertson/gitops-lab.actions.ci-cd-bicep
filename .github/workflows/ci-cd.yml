@@ -17,22 +17,26 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      configuration: release
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2.0.0
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore --configuration ${{ env.configuration }}
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --configuration ${{ env.configuration }}
+      - name: Publish 
+        run: dotnet publish --configuration ${{ env.configuration }} --output ${{runner.temp }}/publish
 
 env:
     AZURE_RG: RG2
-    AZURE_SUBSCRIPTION:  42e65c78-97fd-426c-8d55-fce380c2ffe0
+    AZURE_SUBSCRIPTION: 42e65c78-97fd-426c-8d55-fce380c2ffe0
     AZURE-LOCATION: WestEurope
 
