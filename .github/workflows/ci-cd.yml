@@ -1,13 +1,17 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
-
+name: CI-CD
+ 
 on:
   push:
-    branches: [ "main" ]
+    branches: 
+      - main
+    paths-ignore: 
+      - README.md
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -26,3 +30,9 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+
+env:
+    AZURE_RG: RG2
+    AZURE_SUBSCRIPTION:  42e65c78-97fd-426c-8d55-fce380c2ffe0
+    AZURE-LOCATION: WestEurope
+
